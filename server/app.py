@@ -96,9 +96,8 @@ class MemberOnlyIndex(Resource):
     
     def get(self):
         articles = Article.query.all()
-        for article in articles:
-            article.is_member_only = True
-        articles_dict = [article.to_dict() for article in articles]
+        approved_articles = [article for article in articles if article.is_member_only == True]
+        articles_dict = [article.to_dict() for article in approved_articles]
         
         response = make_response(
             articles_dict,
